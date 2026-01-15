@@ -1,0 +1,7 @@
+{
+  "name": "1.1",
+  "description": "Internal management application for carpet cleaning services, featuring roles for delegates, drivers, and managers with real-time tracking and analytics.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
