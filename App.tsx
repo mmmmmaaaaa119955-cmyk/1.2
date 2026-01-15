@@ -438,7 +438,8 @@ const App: React.FC = () => {
           <ProgressReport orders={orders.filter(o => o.delegateId === currentUser.id)} />
         )}
         {currentUser.role === UserRole.DRIVER && (
-          activeTab === 'orders' ? <DriverDashboard orders={orders} onUpdateStatus={updateOrderStatus} onEditOrder={() => {}} onReorder={setOrders} currentDriver={currentUser} /> :
+          activeTab === 'orders' ? <DriverDashboard orders={orders.filter(o => o.serviceType === 'CARPET' || o.isSeparator)} onUpdateStatus={updateOrderStatus} onEditOrder={addOrUpdateOrder} onReorder={setOrders} currentDriver={currentUser} /> :
+          activeTab === 'services' ? <DriverDashboard orders={orders.filter(o => o.serviceType !== 'CARPET' && !o.isSeparator)} onUpdateStatus={updateOrderStatus} onEditOrder={addOrUpdateOrder} onReorder={setOrders} currentDriver={currentUser} isServicesTab={true} /> :
           <ProgressReport orders={orders.filter(o => o.driverId === currentUser.id)} />
         )}
         {currentUser.role === UserRole.MANAGER && (
@@ -468,7 +469,8 @@ const App: React.FC = () => {
           <>
             {currentUser.role === UserRole.DELEGATE && <NavItem active={activeTab === 'add'} onClick={() => setActiveTab('add')} icon={<PlusCircle size={20} />} label="سجاد" />}
             {currentUser.role === UserRole.DELEGATE && <NavItem active={activeTab === 'services'} onClick={() => setActiveTab('services')} icon={<Layers size={20} />} label="خدمات" />}
-            <NavItem active={activeTab === 'orders'} onClick={() => setActiveTab('orders')} icon={<ClipboardList size={20} />} label="طلباتي" />
+            {currentUser.role === UserRole.DRIVER && <NavItem active={activeTab === 'orders'} onClick={() => setActiveTab('orders')} icon={<ClipboardList size={20} />} label="طلباتي" />}
+            {currentUser.role === UserRole.DRIVER && <NavItem active={activeTab === 'services'} onClick={() => setActiveTab('services')} icon={<Layers size={20} />} label="الخدمات" />}
             <NavItem active={activeTab === 'progress'} onClick={() => setActiveTab('progress')} icon={<TrendingUp size={20} />} label="إنجازي" />
           </>
         )}
